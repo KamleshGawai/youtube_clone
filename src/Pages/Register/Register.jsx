@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -26,17 +27,16 @@ const Register = () => {
       return;
     }
 
-    const response = await fetch("http://localhost:5000/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-
-    const result = await response.json();
-    if (result.success) {
-      alert("Registration successful");
-      navigate("/login");
-    } else {
+    try {
+      const response = await axios.post("http://localhost:5000/register", formData);
+      if (response.data.success) {
+        alert("Registration successful");
+        navigate("/login");
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.error(error);
       alert("Registration failed");
     }
   };

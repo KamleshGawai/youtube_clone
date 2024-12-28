@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -7,18 +8,18 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    const response = await fetch("http://localhost:5000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
-
-    const result = await response.json();
-    if (result.success) {
-      alert("Login successful");
-      localStorage.setItem("user", JSON.stringify(result.user));
-      navigate("/");
-    } else {
+    try {
+      const response = await axios.post("http://localhost:5000/login", { username, password });
+      if (response.data.success) {
+        alert("Login successful");
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem("token", response.data.token);
+        navigate("/");
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.error(error);
       alert("Invalid username or password");
     }
   };
