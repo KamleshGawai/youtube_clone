@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { ThumbsUp, ThumbsDown, Share2, Save } from 'lucide-react';
-import "./VideoPage.css"
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { ThumbsUp, ThumbsDown, Share2, Save } from "lucide-react";
+import "./VideoPage.css";
 
 const VideoPage = () => {
   const [video, setVideo] = useState(null);
   const [relatedVideos, setRelatedVideos] = useState([]);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
   const [isLiking, setIsLiking] = useState(false);
   const [isDisliking, setIsDisliking] = useState(false);
   const [isCommenting, setIsCommenting] = useState(false);
+  const [isEditingComment, setIsEditingComment] = useState(false);
+  const [commentToEdit, setCommentToEdit] = useState(null);
   const { videoId } = useParams();
   const navigate = useNavigate();
 
@@ -23,7 +24,7 @@ const VideoPage = () => {
         setRelatedVideos(data.relatedVideos);
       }
     } catch (error) {
-      console.error('Error fetching video:', error);
+      console.error("Error fetching video:", error);
     }
   };
 
@@ -33,28 +34,19 @@ const VideoPage = () => {
 
   const handleLike = async () => {
     if (isLiking) return;
-    
+
     setIsLiking(true);
     try {
       const response = await fetch(`http://localhost:5000/videos/${videoId}/like`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
       });
-      
       const data = await response.json();
-      
       if (data.success) {
-        setVideo(prev => ({
-          ...prev,
-          likes: data.likes
-        }));
-      } else {
-        console.error('Failed to update likes:', data.message);
+        setVideo((prev) => ({ ...prev, likes: data.likes }));
       }
     } catch (error) {
-      console.error('Error updating likes:', error);
+      console.error("Error updating likes:", error);
     } finally {
       setIsLiking(false);
     }
@@ -62,28 +54,19 @@ const VideoPage = () => {
 
   const handleDislike = async () => {
     if (isDisliking) return;
-    
+
     setIsDisliking(true);
     try {
       const response = await fetch(`http://localhost:5000/videos/${videoId}/dislike`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
       });
-      
       const data = await response.json();
-      
       if (data.success) {
-        setVideo(prev => ({
-          ...prev,
-          dislikes: data.dislikes
-        }));
-      } else {
-        console.error('Failed to update dislikes:', data.message);
+        setVideo((prev) => ({ ...prev, dislikes: data.dislikes }));
       }
     } catch (error) {
-      console.error('Error updating dislikes:', error);
+      console.error("Error updating dislikes:", error);
     } finally {
       setIsDisliking(false);
     }
@@ -96,28 +79,68 @@ const VideoPage = () => {
     setIsCommenting(true);
     try {
       const response = await fetch(`http://localhost:5000/videos/${videoId}/comment`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: 'user123', // Replace with actual user ID from auth
-          comment: comment.trim()
-        }),
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: "user123", comment: comment.trim() }),
       });
-
       const data = await response.json();
       if (data.success) {
-        setVideo(prev => ({
-          ...prev,
-          comments: [...prev.comments, data.comment]
-        }));
-        setComment('');
+        setVideo((prev) => ({ ...prev, comments: [...prev.comments, data.comment] }));
+        setComment("");
       }
     } catch (error) {
-      console.error('Error adding comment:', error);
+      console.error("Error adding comment:", error);
     } finally {
       setIsCommenting(false);
+    }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/comments/${commentId}`, {
+        method: "DELETE",
+      });
+      const data = await response.json();
+      if (data.success) {
+        setVideo((prev) => ({
+          ...prev,
+          comments: prev.comments.filter((c) => c.commentId !== commentId),
+        }));
+      }
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+    }
+  };
+
+  const handleEditComment = (commentId, currentText) => {
+    setIsEditingComment(true);
+    setCommentToEdit(commentId);
+    setComment(currentText);
+  };
+
+  const handleUpdateComment = async () => {
+    if (!comment.trim()) return;
+
+    try {
+      const response = await fetch(`http://localhost:5000/comments/${commentToEdit}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ comment: comment.trim() }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        setVideo((prev) => ({
+          ...prev,
+          comments: prev.comments.map((c) =>
+            c.commentId === commentToEdit ? { ...c, comment: comment.trim() } : c
+          ),
+        }));
+        setComment("");
+        setIsEditingComment(false);
+        setCommentToEdit(null);
+      }
+    } catch (error) {
+      console.error("Error updating comment:", error);
     }
   };
 
@@ -126,133 +149,85 @@ const VideoPage = () => {
   }
 
   return (
-    <div className="video-page-container">
-      <div className="content-container">
-        {/* Primary Content */}
-        <div className="primary">
+    <div className="video-page">
+      <div className="main-content">
+        <div className="video-section">
           {/* Video Player */}
-          <div className="video-container">
-            <video controls src={video.src} />
+          <video controls src={video.src} className="video-player" />
+          <h1 className="video-title">{video.title}</h1>
+          <div className="video-actions">
+            <button onClick={handleLike} disabled={isLiking}>
+              <ThumbsUp className="icon" />
+              {video.likes}
+            </button>
+            <button onClick={handleDislike} disabled={isDisliking}>
+              <ThumbsDown className="icon" />
+              {video.dislikes}
+            </button>
+            <button>
+              <Share2 className="icon" />
+              Share
+            </button>
+            <button>
+              <Save className="icon" />
+              Save
+            </button>
           </div>
-
-          {/* Video Info */}
-          <div className="video-info">
-            <h1 className="video-title">{video.title}</h1>
-            
-            <div className="video-stats">
-              <div className="views-date">
-                <span>{video.views?.toLocaleString()} views</span>
-                <span> • </span>
-                <span>{new Date(video.uploadDate).toLocaleDateString()}</span>
-              </div>
-              
-              <div className="video-actions">
-                <button 
-                  className="action-button"
-                  onClick={handleLike}
-                  disabled={isLiking}
-                >
-                  <ThumbsUp className="w-5 h-5" />
-                  <span>{video?.likes || 0}</span>
-                </button>
-                <button 
-                  className="action-button"
-                  onClick={handleDislike}
-                  disabled={isDisliking}
-                >
-                  <ThumbsDown className="w-5 h-5" />
-                  <span>{video?.dislikes || 0}</span>
-                </button>
-                <button className="action-button">
-                  <Share2 className="w-5 h-5" />
-                  <span>Share</span>
-                </button>
-                <button className="action-button">
-                  <Save className="w-5 h-5" />
-                  <span>Save</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Channel Info */}
-          <div className="channel-info">
-            <div className="channel-avatar"></div>
-            <div className="channel-details">
-              <h3 className="channel-name">{video.uploader}</h3>
-              <p className="subscriber-count">500K subscribers</p>
-            </div>
-            <button className="subscribe-button">Subscribe</button>
-          </div>
-
-          {/* Description */}
-          <div className="video-description">
-            <p>{video.description}</p>
-          </div>
-
-          {/* Comments Section */}
           <div className="comments-section">
-            <h3 className="comments-header">
-              {video.comments?.length || 0} Comments
-            </h3>
-            
-            <form onSubmit={handleCommentSubmit} className="comment-form">
-              <div className="comment-avatar"></div>
+            <h3>Comments ({video.comments?.length || 0})</h3>
+            <form onSubmit={handleCommentSubmit}>
               <input
                 type="text"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="Add a comment..."
-                className="comment-input"
                 disabled={isCommenting}
               />
+              <button type="submit" disabled={isCommenting}>
+                Comment
+              </button>
             </form>
-
             <div className="comment-list">
-              {video.comments?.map((comment) => (
-                <div key={comment.commentId} className="comment-item">
-                  <div className="comment-avatar"></div>
-                  <div className="comment-content">
-                    <div className="comment-header">
-                      <span className="comment-author">User</span>
-                      <span className="comment-date">
-                        {new Date(comment.commentDate).toLocaleDateString()}
-                      </span>
-                    </div>
-                    <p className="comment-text">{comment.comment}</p>
+              {video.comments?.map((c) => (
+                <div key={c.commentId} className="comment-item">
+                  <p>{c.comment}</p>
+                  <div className="comment-actions">
+                    <button onClick={() => handleEditComment(c.commentId, c.comment)}>Edit</button>
+                    <button onClick={() => handleDeleteComment(c.commentId)}>Delete</button>
                   </div>
                 </div>
               ))}
             </div>
+            {isEditingComment && (
+              <div className="edit-comment">
+                <input
+                  type="text"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  placeholder="Edit your comment..."
+                />
+                <button onClick={handleUpdateComment}>Update</button>
+                <button onClick={() => setIsEditingComment(false)}>Cancel</button>
+              </div>
+            )}
           </div>
         </div>
-
-        {/* Secondary Content (Related Videos) */}
-        <div className="secondary">
-          <div className="related-videos">
-            {relatedVideos.map((relatedVideo) => (
-              <div
-                key={relatedVideo.videoId}
-                className="related-video-card"
-                onClick={() => navigate(`/video/${relatedVideo.videoId}`)}
-              >
-                <div className="thumbnail-container">
-                  <img
-                    src={relatedVideo.thumbnailUrl}
-                    alt={relatedVideo.title}
-                    className="thumbnail"
-                  />
-                </div>
-                <div className="video-details">
-                  <h3 className="video-title-secondary">{relatedVideo.title}</h3>
-                  <p className="channel-name-secondary">{relatedVideo.uploader}</p>
-                  <p className="video-stats-secondary">
-                    {relatedVideo.views?.toLocaleString()} views
-                  </p>
-                </div>
+        <div className="related-videos">
+          <h3>Related Videos</h3>
+          {relatedVideos.map((rv) => (
+            <div
+              key={rv.videoId}
+              className="related-video"
+              onClick={() => navigate(`/video/${rv.videoId}`)}
+            >
+              <img src={rv.thumbnailUrl} alt={rv.title} className="thumbnail" />
+              <div className="video-info">
+                <p className="related-title">{rv.title}</p>
+                <p>{rv.uploader}</p>
+                <p>{rv.views?.toLocaleString()} views</p>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

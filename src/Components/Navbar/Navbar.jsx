@@ -6,20 +6,20 @@ import search_icon from "../../assets/search.png";
 import music from "../../assets/music (1).png";
 import notification_icon from "../../assets/notification.png";
 import userIcon from "../../assets/user.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 
 const Navbar = ({ setSidebar }) => {
   const { user, setUser } = useContext(UserContext);
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const navigate = useNavigate();
 
   const sidebarToggle = () => {
     setSidebar((prev) => !prev);
   };
 
   const handleViewChannel = () => {
-    navigate("/channel");
+    // Open channel.html in the same window
+    window.location.href = '/src/Pages/Channel/Channel.html';
   };
 
   const handleLogout = () => {
@@ -27,7 +27,7 @@ const Navbar = ({ setSidebar }) => {
     localStorage.removeItem("token");
     setUser(null);
     setDropdownVisible(false);
-    navigate("/login");
+    window.location.href = '/login';
   };
 
   const toggleDropdown = () => {
