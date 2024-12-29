@@ -21,8 +21,12 @@
 
  1. all videos are allredy saved on "cloudinary.com" that can be acces by link that avilable in database  
 
+<<<<<<< HEAD
  2. for login use Sing in Button on Home page then >> Click on Register button with then given data user can login 
 
  # ScreenShots 
 
  1. all page ScreeenShot are in Screenshot Folder
+=======
+ 2. for login use Sing in Button on Home page then >> Click on Register button with then given data user can login 
+>>>>>>> f2ff8764023454b844f9cbf4d94cb8fa58943382

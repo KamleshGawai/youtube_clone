@@ -10,6 +10,7 @@
   "channelId": "channel01",
   "uploader": "user01",
   "views": 15200,
+<<<<<<< HEAD
   "likes": 1042,
   "dislikes": 47,
   "uploadDate": "2024-09-20",
@@ -27,6 +28,25 @@
     }
   ],
   "__v": 3
+=======
+  "likes": 1040,
+  "dislikes": 45,
+  "uploadDate": "2024-09-20",
+  "comments": [
+    {
+      "commentId": "6770b566978e11732b65d21e",
+      "userId": "user123",
+      "comment": "nice this video",
+      "commentDate": {
+        "$date": "2024-12-29T02:35:18.321Z"
+      },
+      "_id": {
+        "$oid": "6770b566978e11732b65d21f"
+      }
+    }
+  ],
+  "__v": 2
+>>>>>>> f2ff8764023454b844f9cbf4d94cb8fa58943382
 },
 {
   "_id": {
@@ -136,6 +156,7 @@
   "channelId": "channel06",
   "uploader": "user11",
   "views": 15300,
+<<<<<<< HEAD
   "likes": 1155,
   "dislikes": 40,
   "uploadDate": "2024-10-15",
@@ -164,6 +185,19 @@
     }
   ],
   "__v": 4
+=======
+  "likes": 1150,
+  "dislikes": 36,
+  "uploadDate": "2024-10-15",
+  "comments": [
+    {
+      "commentId": "comment06",
+      "userId": "user12",
+      "comment": "Excellent content, very detailed.",
+      "commentDate": "2024-10-16"
+    }
+  ]
+>>>>>>> f2ff8764023454b844f9cbf4d94cb8fa58943382
 },
 {
   "_id": {
