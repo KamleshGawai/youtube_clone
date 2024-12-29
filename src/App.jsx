@@ -8,6 +8,7 @@ import Register from "./Pages/Register/Register";
 import { UserProvider } from "./contexts/UserContext"; // Import UserProvider
 import VideoPage from './Pages/VideoPlayer/VideoPage';
 
+
 const App = () => {
   const [sidebar, setSidebar] = useState(true); // State for Sidebar toggle
   const [category, setCategory] = useState(0); // State for active category
@@ -28,6 +29,7 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/video/:videoId" element={<VideoPage />} />
+            
           </Routes>
         </div>
       </div>

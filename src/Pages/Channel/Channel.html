@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Channel Page</title>
+  <link rel="stylesheet" href="Channel.css">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/lucide.min.js"></script>
+</head>
+<body>
+  <div class="channel-container">
+    <!-- Channel Banner -->
+    <div class="channel-banner" style="background-image: url('https://images.unsplash.com/photo-1707343843437-caacff5cfa74?q=80&w=2940&auto=format&fit=crop'); background-size: cover; background-position: center;">
+      <div class="banner-overlay">
+        <button class="banner-upload-btn">
+          <i class="icon" data-lucide="camera"></i>
+          <span>Change Banner</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Channel Info -->
+    <div class="channel-info-section">
+      <div class="channel-info-container">
+        <div class="channel-profile">
+          <div class="avatar-container">
+            <img src="user.png" alt="Channel" class="channel-avatar">
+            <button class="avatar-upload-btn">
+              <i data-lucide="camera"></i>
+            </button>
+          </div>
+          <div class="channel-details">
+            <h1>Your Channel</h1>
+            <div class="channel-stats">
+              <span>1.2K subscribers</span>
+              <span>•</span>
+              <span>50K views</span>
+              <span>•</span>
+              <span>Joined Jan 15, 2024</span>
+            </div>
+          </div>
+        </div>
+        <div class="channel-actions">
+          <button class="customize-channel">
+            <i data-lucide="settings"></i>
+            <span>Customize Channel</span>
+          </button>
+          <button class="manage-videos">
+            <i data-lucide="video"></i>
+            <span>Manage Videos</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="channel-nav">
+        <button class="channel-tab active" onclick="setActiveTab('HOME')">HOME</button>
+        <button class="channel-tab" onclick="setActiveTab('VIDEOS')">VIDEOS</button>
+        <button class="channel-tab" onclick="setActiveTab('PLAYLISTS')">PLAYLISTS</button>
+        <button class="channel-tab" onclick="setActiveTab('ABOUT')">ABOUT</button>
+      </div>
+    </div>
+
+    <!-- Content Section -->
+    <div id="channel-content" class="channel-content">
+      <!-- Default content goes here -->
+    </div>
+  </div>
+
+  <script>
+    const dummyVideos = [
+      { id: 1, title: "Getting Started with React", duration: "15:30", views: "15K", uploadDate: "2 weeks ago" },
+      { id: 2, title: "Advanced JavaScript Concepts", duration: "20:45", views: "10K", uploadDate: "3 weeks ago" },
+      { id: 3, title: "CSS Grid Tutorial", duration: "12:15", views: "8K", uploadDate: "1 month ago" },
+      { id: 4, title: "Node.js Crash Course", duration: "25:00", views: "12K", uploadDate: "2 months ago" }
+    ];
+
+    function setActiveTab(tab) {
+      const tabs = document.querySelectorAll('.channel-tab');
+      tabs.forEach(t => t.classList.remove('active'));
+      document.querySelector(`.channel-tab[onclick="setActiveTab('${tab}')"]`).classList.add('active');
+      renderContent(tab);
+    }
+
+    function renderContent(tab) {
+      const content = document.getElementById('channel-content');
+      content.innerHTML = '';
+
+      if (tab === 'HOME' || tab === 'VIDEOS') {
+        const videoGrid = document.createElement('div');
+        videoGrid.className = 'videos-grid';
+        dummyVideos.forEach(video => {
+          const videoCard = `
+            <div class="video-card">
+              <div class="thumbnail-container">
+                <img src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="${video.title}" class="video-thumbnail">
+                <span class="video-duration">${video.duration}</span>
+              </div>
+              <div class="video-info">
+                <h3 class="video-title">${video.title}</h3>
+                <div class="video-stats">
+                  <span>${video.views} views</span>
+                  <span>•</span>
+                  <span>${video.uploadDate}</span>
+                </div>
+              </div>
+            </div>`;
+          videoGrid.innerHTML += videoCard;
+        });
+        content.appendChild(videoGrid);
+      } else if (tab === 'PLAYLISTS') {
+        content.innerHTML = '<p>No playlists created yet</p>';
+      } else if (tab === 'ABOUT') {
+        content.innerHTML = `
+          <h3>About</h3>
+          <p>Welcome to my channel! Here I share content about web development and programming.</p>`;
+      }
+    }
+
+    // Initialize default tab
+    renderContent('HOME');
+    lucide.createIcons();
+  </script>
+</body>
+</html>

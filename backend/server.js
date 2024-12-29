@@ -247,6 +247,78 @@ app.put('/videos/:videoId/dislike', async (req, res) => {
   }
 });
 
+// Route to edit a comment
+app.put('/comments/:commentId', async (req, res) => {
+  const { commentId } = req.params;
+  const { comment } = req.body;
+  
+  try {
+    const video = await Video.findOneAndUpdate(
+      { 'comments.commentId': commentId },
+      { 
+        $set: { 
+          'comments.$.comment': comment,
+        }
+      },
+      { new: true }
+    );
+
+    if (!video) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'Comment not found' 
+      });
+    }
+
+    res.json({ 
+      success: true, 
+      message: 'Comment updated successfully',
+      comment: video.comments.find(c => c.commentId === commentId)
+    });
+  } catch (error) {
+    console.error('Error updating comment:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Error updating comment' 
+    });
+  }
+});
+
+// Route to delete a comment
+app.delete('/comments/:commentId', async (req, res) => {
+  const { commentId } = req.params;
+  
+  try {
+    const video = await Video.findOneAndUpdate(
+      { 'comments.commentId': commentId },
+      { 
+        $pull: { 
+          comments: { commentId: commentId } 
+        }
+      },
+      { new: true }
+    );
+
+    if (!video) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'Comment not found' 
+      });
+    }
+
+    res.json({ 
+      success: true, 
+      message: 'Comment deleted successfully' 
+    });
+  } catch (error) {
+    console.error('Error deleting comment:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Error deleting comment' 
+    });
+  }
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

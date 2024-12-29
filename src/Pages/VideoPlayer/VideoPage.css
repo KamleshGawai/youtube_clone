@@ -299,3 +299,69 @@
     font-size: 16px;
     color: #606060;
   }
+
+  .comment-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+  }
+  
+  .comment-actions {
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  
+  .comment-item:hover .comment-actions {
+    opacity: 1;
+  }
+  
+  .comment-action-button {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    color: #666;
+    border-radius: 50%;
+  }
+  
+  .comment-action-button:hover {
+    background-color: #f2f2f2;
+    color: #000;
+  }
+  
+  .comment-edit {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  
+  .comment-edit-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .comment-edit-actions {
+    display: flex;
+    gap: 4px;
+  }
+  
+  .edit-action-button {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    color: #666;
+    border-radius: 50%;
+  }
+  
+  .edit-action-button:hover {
+    background-color: #f2f2f2;
+    color: #000;
+  }

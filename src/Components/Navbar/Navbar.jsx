@@ -18,9 +18,8 @@ const Navbar = ({ setSidebar }) => {
     setSidebar((prev) => !prev);
   };
 
-  const handleViewChannel = () => {
-    navigate("/channel");
-  };
+ 
+  
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -85,7 +84,7 @@ const Navbar = ({ setSidebar }) => {
                   {user.firstName} {user.lastName}
                 </p>
                 <p>ID: {user._id}</p>
-                <button onClick={handleViewChannel}>View Your Channel</button>
+                <a href="/src/Pages/Channel/Channel.html"><button>View Your Channel</button></a>
                 <button className="logout-button" onClick={handleLogout}>
                   Logout
                 </button>

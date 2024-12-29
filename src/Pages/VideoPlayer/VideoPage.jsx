@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { ThumbsUp, ThumbsDown, Share2, Save } from 'lucide-react';
+import { ThumbsUp, ThumbsDown, Share2, Save, Edit2, Trash2, X, Check } from 'lucide-react';
 import "./VideoPage.css"
 
 const VideoPage = () => {
   const [video, setVideo] = useState(null);
   const [relatedVideos, setRelatedVideos] = useState([]);
   const [comment, setComment] = useState('');
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editedComment, setEditedComment] = useState('');
   const [isLiking, setIsLiking] = useState(false);
   const [isDisliking, setIsDisliking] = useState(false);
   const [isCommenting, setIsCommenting] = useState(false);
@@ -50,8 +52,6 @@ const VideoPage = () => {
           ...prev,
           likes: data.likes
         }));
-      } else {
-        console.error('Failed to update likes:', data.message);
       }
     } catch (error) {
       console.error('Error updating likes:', error);
@@ -79,8 +79,6 @@ const VideoPage = () => {
           ...prev,
           dislikes: data.dislikes
         }));
-      } else {
-        console.error('Failed to update dislikes:', data.message);
       }
     } catch (error) {
       console.error('Error updating dislikes:', error);
@@ -118,6 +116,68 @@ const VideoPage = () => {
       console.error('Error adding comment:', error);
     } finally {
       setIsCommenting(false);
+    }
+  };
+
+  const handleEditStart = (commentId, currentComment) => {
+    setEditingCommentId(commentId);
+    setEditedComment(currentComment);
+  };
+
+  const handleEditCancel = () => {
+    setEditingCommentId(null);
+    setEditedComment('');
+  };
+
+  const handleEditSave = async (commentId) => {
+    if (!editedComment.trim()) return;
+
+    try {
+      const response = await fetch(`http://localhost:5000/comments/${commentId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          comment: editedComment.trim()
+        }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setVideo(prev => ({
+          ...prev,
+          comments: prev.comments.map(comment => 
+            comment.commentId === commentId 
+              ? { ...comment, comment: editedComment.trim() }
+              : comment
+          )
+        }));
+        setEditingCommentId(null);
+        setEditedComment('');
+      }
+    } catch (error) {
+      console.error('Error updating comment:', error);
+    }
+  };
+
+  const handleDelete = async (commentId) => {
+    if (!window.confirm('Are you sure you want to delete this comment?')) return;
+
+    try {
+      const response = await fetch(`http://localhost:5000/comments/${commentId}`, {
+        method: 'DELETE',
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setVideo(prev => ({
+          ...prev,
+          comments: prev.comments.filter(comment => comment.commentId !== commentId)
+        }));
+      }
+    } catch (error) {
+      console.error('Error deleting comment:', error);
     }
   };
 
@@ -219,7 +279,48 @@ const VideoPage = () => {
                         {new Date(comment.commentDate).toLocaleDateString()}
                       </span>
                     </div>
-                    <p className="comment-text">{comment.comment}</p>
+                    {editingCommentId === comment.commentId ? (
+                      <div className="comment-edit">
+                        <input
+                          type="text"
+                          value={editedComment}
+                          onChange={(e) => setEditedComment(e.target.value)}
+                          className="comment-edit-input"
+                        />
+                        <div className="comment-edit-actions">
+                          <button
+                            onClick={() => handleEditSave(comment.commentId)}
+                            className="edit-action-button"
+                          >
+                            <Check className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={handleEditCancel}
+                            className="edit-action-button"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="comment-row">
+                        <p className="comment-text">{comment.comment}</p>
+                        <div className="comment-actions">
+                          <button
+                            onClick={() => handleEditStart(comment.commentId, comment.comment)}
+                            className="comment-action-button"
+                          >
+                            <Edit2 className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(comment.commentId)}
+                            className="comment-action-button"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
