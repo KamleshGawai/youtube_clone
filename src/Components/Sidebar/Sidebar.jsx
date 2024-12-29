@@ -10,10 +10,18 @@ import learning from '../../assets/learning.png';
 import clock from '../../assets/clock.png';
 import like from '../../assets/like.png';
 import download from '../../assets/download.png';
+<<<<<<< HEAD
 
 const Sidebar = ({ sidebar, category, setCategory }) => {
   return (
     <div className={`sidebar ${sidebar ? '' : 'small-sidebar'} sidebarBox`}>
+=======
+import { Link, useNavigate } from "react-router-dom";
+
+const Sidebar = ({ sidebar, category, setCategory }) => {
+  return (
+    <div className={`sidebar ${sidebar ? '' : 'small-sidebar'}`}>
+>>>>>>> 36121eac5121d02dfec71884f0fce3413fc40e5e
       <div className="shortcut-links">
         <div
           onClick={() => {
@@ -24,9 +32,20 @@ const Sidebar = ({ sidebar, category, setCategory }) => {
           <img src={home} alt="" />
           {sidebar && <p>Home</p>}
         </div>
+<<<<<<< HEAD
         <div className={`side-link ${category === 20 ? 'active' : ''}`}>
           <img src={Shorts} alt="" />
           {sidebar && <p>Shorts</p>}
+=======
+        <div onClick={() => {
+            setCategory(0);
+          }}
+          className={`side-link ${category === 0 ? 'active' : ''}`}>
+          <Link to="/" className="logo-container">
+          <img src={home} alt="" />
+          {sidebar && <p>Home</p>}
+          </Link>
+>>>>>>> 36121eac5121d02dfec71884f0fce3413fc40e5e
         </div>
         <div className={`side-link ${category === 2 ? 'active' : ''}`}>
           <img src={subscribe} alt="" />

@@ -14,7 +14,11 @@
   .sidebar {
     width: 250px; /* Sidebar width when open */
     position: fixed;
+<<<<<<< HEAD
     top: 5%;
+=======
+    top: 0;
+>>>>>>> 36121eac5121d02dfec71884f0fce3413fc40e5e
     left: 0;
     height: 100%;
     background-color: #f8f8f8;

@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../Components/Sidebar/Sidebar';
 import './Home.css';
+<<<<<<< HEAD
+=======
+import reactImage from "../../assets/React.jpeg"
+>>>>>>> 36121eac5121d02dfec71884f0fce3413fc40e5e
 
 const Home = ({ sidebar }) => {
   const [category, setCategory] = useState();
@@ -32,7 +36,11 @@ const Home = ({ sidebar }) => {
               onClick={() => navigate(`/video/${video.videoId}`)} // Navigate on click
             >
               <img
+<<<<<<< HEAD
                 src={video.thumbnailUrl}
+=======
+                src={reactImage}
+>>>>>>> 36121eac5121d02dfec71884f0fce3413fc40e5e
                 alt={video.title}
                 className="video-thumbnail"
               />

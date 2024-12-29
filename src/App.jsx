@@ -6,8 +6,11 @@ import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
 import { UserProvider } from "./contexts/UserContext"; // Import UserProvider
+<<<<<<< HEAD
 import VideoPage from './Pages/VideoPlayer/VideoPage';
 
+=======
+>>>>>>> 36121eac5121d02dfec71884f0fce3413fc40e5e
 
 const App = () => {
   const [sidebar, setSidebar] = useState(true); // State for Sidebar toggle
@@ -28,8 +31,11 @@ const App = () => {
             <Route path="/" element={<Home sidebar={sidebar} />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+<<<<<<< HEAD
             <Route path="/video/:videoId" element={<VideoPage />} />
             
+=======
+>>>>>>> 36121eac5121d02dfec71884f0fce3413fc40e5e
           </Routes>
         </div>
       </div>

@@ -18,8 +18,14 @@ const Navbar = ({ setSidebar }) => {
     setSidebar((prev) => !prev);
   };
 
+<<<<<<< HEAD
  
   
+=======
+  const handleViewChannel = () => {
+    navigate("/channel");
+  };
+>>>>>>> 36121eac5121d02dfec71884f0fce3413fc40e5e
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -34,25 +40,31 @@ const Navbar = ({ setSidebar }) => {
   };
 
   return (
-    <nav className="flex-div">
-      <div className="nav-left flex-div">
+    <nav className="navbar">
+      <div className="nav-left">
         <img
           src={menu_icon}
           alt="Menu"
           className="menu-icon"
           onClick={sidebarToggle}
         />
+<<<<<<< HEAD
         <Link to="/">
           <img src={logo} alt="Logo" className="logo" />
         </Link>
         <Link to="/">
+=======
+        <Link to="/" className="logo-container">
+          <img src={logo} alt="Logo" className="logo" />
+>>>>>>> 36121eac5121d02dfec71884f0fce3413fc40e5e
           <h3 className="branding">YouTube</h3>
         </Link>
       </div>
 
-      <div className="nav-middle flex-div">
-        <div className="search-box flex-div">
+      <div className="nav-middle">
+        <div className="search-box">
           <input type="text" placeholder="Search" />
+<<<<<<< HEAD
           <img className="search_icon" src={search_icon} alt="Search" />
         </div>
         <div className="mike">
@@ -67,6 +79,22 @@ const Navbar = ({ setSidebar }) => {
           </Link>
         ) : (
           <>
+=======
+          <img className="search-icon" src={search_icon} alt="Search" />
+        </div>
+        <div className="mic-container">
+          <img src={music} alt="Microphone" />
+        </div>
+      </div>
+
+      <div className="nav-right">
+        {!user ? (
+          <Link to="/login">
+            <button className="sign-in-button">Sign in</button>
+          </Link>
+        ) : (
+          <div className="user-section">
+>>>>>>> 36121eac5121d02dfec71884f0fce3413fc40e5e
             <img
               src={notification_icon}
               alt="Notifications"
@@ -84,13 +112,21 @@ const Navbar = ({ setSidebar }) => {
                   {user.firstName} {user.lastName}
                 </p>
                 <p>ID: {user._id}</p>
+<<<<<<< HEAD
                 <a href="/src/Pages/Channel/Channel.html"><button>View Your Channel</button></a>
+=======
+                <button onClick={handleViewChannel}>View Your Channel</button>
+>>>>>>> 36121eac5121d02dfec71884f0fce3413fc40e5e
                 <button className="logout-button" onClick={handleLogout}>
                   Logout
                 </button>
               </div>
             )}
+<<<<<<< HEAD
           </>
+=======
+          </div>
+>>>>>>> 36121eac5121d02dfec71884f0fce3413fc40e5e
         )}
       </div>
     </nav>

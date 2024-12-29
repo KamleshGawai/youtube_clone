@@ -1,0 +1,38 @@
+.video-player-page {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .video-section {
+    flex: 3;
+  }
+  
+  .video-player {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .related-videos {
+    flex: 1;
+  }
+  
+  .related-video-card {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  .related-video-card img {
+    width: 80px;
+    height: 45px;
+    margin-right: 10px;
+  }
+  
+  .related-video-card p {
+    font-size: 14px;
+    color: #333;
+  }
+  

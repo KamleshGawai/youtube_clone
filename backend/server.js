@@ -170,6 +170,7 @@ app.post('/add-video', async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 app.post('/videos/:videoId/comment', async (req, res) => {
   const { videoId } = req.params;
   const { userId, comment } = req.body;
@@ -319,6 +320,8 @@ app.delete('/comments/:commentId', async (req, res) => {
   }
 });
 
+=======
+>>>>>>> 36121eac5121d02dfec71884f0fce3413fc40e5e
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

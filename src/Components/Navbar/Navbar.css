@@ -1,84 +1,160 @@
-nav{
-    padding: 10px 2%;
+/* General Navbar Styling */
+.navbar {
+    display: flex;
     justify-content: space-between;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    align-items: center;
+    padding: 10px 2%;
     background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     position: sticky;
     top: 0;
     z-index: 10;
-}
-.nav-right img{
-    width: 25px;
-    margin-right: 25px;
-}
-.nav-right .user-icon{
-    width: 35px;
-    border-radius: 50%;
-    margin-right: 0;
-}
-.nav-left .menu-icon{
+  }
+  
+  .nav-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .menu-icon {
     width: 22px;
-    margin-right: 25px;
-}
-.nav-left .logo{
-    width: 30px;
-}
-
-.nav-left .branding{
-    margin-left:5px;
-    color: black;
-}
-.nav-middle .search-box{
-    border: 1px solid #ccc;
     margin-right: 15px;
+    cursor: pointer;
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  
+  .logo {
+    width: 30px;
+  }
+  
+  .branding {
+    margin-left: 5px;
+    color: black;
+    font-size: 18px;
+  }
+  
+  .nav-middle {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
     padding: 8px 12px;
     border-radius: 25px;
-}
-.nav-middle .search-box input{
-    width: 550px;
-    border: 0;
-    outline: 0;
+    margin-right: 15px;
+  }
+  
+  .search-box input {
+    width: 400px;
+    border: none;
+    outline: none;
     background: transparent;
-}
-.nav-middle .search-box  img{
+  }
+  
+  .search-icon {
     width: 15px;
-}
-
-.nav-middle .mike{
-    border-radius: 50%;
-    background-color: qua;
-}
-
-.nav-middle .mike img{
+    cursor: pointer;
+  }
+  
+  .mic-container img {
     width: 25px;
-    
-    margin-right: 0;
-   
-}
-button{
+    cursor: pointer;
+  }
+  
+  .nav-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .notification-icon,
+  .user-icon {
+    width: 25px;
+    margin-right: 15px;
+    cursor: pointer;
+  }
+  
+  .user-icon {
+    width: 35px;
+    border-radius: 50%;
+  }
+  
+  .sign-in-button {
     height: 30px;
     width: 70px;
-    margin-right: 10px;
     border-radius: 30px;
-}
-
-@media (max-width: 900px){
-    .menu-icon{
-        display: none;
+    background-color: #0073e6;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Dropdown Menu */
+  .dropdown-menu {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    min-width: 200px;
+    text-align: left;
+  }
+  
+  .dropdown-menu p {
+    margin: 5px 0;
+  }
+  
+  .dropdown-menu button {
+    background-color: #f1f1f1;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 5px;
+  }
+  
+  .dropdown-menu button:hover {
+    background-color: #ddd;
+  }
+  
+  .logout-button {
+    margin-top: 10px;
+    font-weight: bold;
+    color: red;
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 900px) {
+    .nav-middle {
+      display: none;
     }
-    .nav-right img{
-        display: none;
+  
+    .menu-icon {
+      display: block;
     }
-    .nav-right .user-icon{
-        display: block;
-        width: 30px;
+  
+    .logo {
+      width: 25px;
     }
-    .logo{
-        width: 90px;
+  
+    .branding {
+      font-size: 14px;
     }
-    .nav-middle .mic-icon{
-        display: none;
+  
+    .user-icon {
+      width: 30px;
     }
+<<<<<<< HEAD
     .nav-middle .search-box input{
         width: 100px;
      }
@@ -118,5 +194,23 @@ button{
     margin-top: 10px;
     font-weight: bold;
     color: red;
+=======
+  
+    .sign-in-button {
+      width: 60px;
+      font-size: 12px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .nav-left {
+      flex: 1;
+    }
+  
+    .nav-right {
+      flex: 1;
+      justify-content: flex-end;
+    }
+>>>>>>> 36121eac5121d02dfec71884f0fce3413fc40e5e
   }
   
