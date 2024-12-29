@@ -1,0 +1,132 @@
+.register-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  }
+  
+  .register-container {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .register-page h2 {
+    color: #2c3e50;
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    text-align: center;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+  }
+  
+  .register-page h2:after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #3498db;
+    margin: 15px auto 0;
+    border-radius: 2px;
+  }
+  
+  .register-page input {
+    width: 100%;
+    max-width: 500px;
+    padding: 15px 20px;
+    margin: 12px 0;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: #f8fafc;
+  }
+  
+  .register-page input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+    transform: translateY(-2px);
+    background-color: white;
+  }
+  
+  .register-page input::placeholder {
+    color: #95a5a6;
+  }
+  
+  .register-page input[type="date"] {
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 14px;
+  }
+  
+  .register-page button {
+    width: 100%;
+    max-width: 500px;
+    padding: 15px;
+    margin-top: 30px;
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+  }
+  
+  .register-page button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+    background: linear-gradient(135deg, #2980b9 0%, #2471a3 100%);
+  }
+  
+  .register-page button:active {
+    transform: translateY(-1px);
+  }
+  
+  /* Add animation for form elements */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .register-page input,
+  .register-page button {
+    animation: fadeInUp 0.5s ease-out forwards;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .register-container {
+      padding: 30px 20px;
+    }
+  
+    .register-page input,
+    .register-page button {
+      max-width: 100%;
+    }
+    
+    .register-page h2 {
+      font-size: 2rem;
+    }
+  }

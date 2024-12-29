@@ -1,0 +1,46 @@
+.app {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  display: flex;
+  transition: margin-left 0.3s ease;
+  /* Initially, shift the content when sidebar is open */
+}
+
+.main-content.with-sidebar {
+  margin-left: 250px; /* Adjust this value according to the width of your sidebar */
+}
+
+.sidebar {
+  width: 250px; /* Sidebar width */
+  transition: width 0.3s;
+}
+
+.small-sidebar {
+  width: 80px; /* Collapsed sidebar width */
+}
+
+.main-content > div:last-child {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.login-page {
+  /* Style your login page */
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-page input {
+  margin: 10px;
+}
+
+.login-page button {
+  margin: 10px;
+}
